@@ -21,21 +21,21 @@ function createPost({
     delBtn.addEventListener('click', handleRemoveClick);
 
     const curPostLink = document.createElement('a');
-    curPostLink.href = `${link}`;
+    curPostLink.href = link;
     const curPostHeader = document.createElement('h4');
     curPostHeader.classList.add('post__header');
-    curPostHeader.innerText = `${header}`;
+    curPostHeader.innerText = header;
 
     const curPostImgwrapper = document.createElement('div');
     curPostImgwrapper.classList.add('post__poster');
     const curPostLink1 = document.createElement('a');
-    curPostLink1.href = `${link}`
+    curPostLink1.href = link;
     const curPostLinkImg = document.createElement('img');
-    curPostLinkImg.src = `${poster}`;
+    curPostLinkImg.src = poster
 
     const curPostDescwrapper = document.createElement('div');
     curPostDescwrapper.classList.add('post__body');
-    curPostDescwrapper.innerText = `${text}`;
+    curPostDescwrapper.innerText = text;
 
     curPostLink.append(curPostHeader);
     curPostLink1.append(curPostLinkImg);
@@ -48,19 +48,23 @@ function createPost({
 
 }
 
-async function init() {
+function init() {
     postsList.innerHTML = '';
-    const responce = await fetch('http://inno-ijl.ru/multystub//stc-21-03/posts', {
-        cors: 'no-cors',
-    });
-    const posts = await responce.json();
+    fetch('http://inno-ijl.ru/multystub//stc-21-03/posts1', {
+            cors: 'no-cors',
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json()
+            }
+            throw new Error('Статус ошибочен')
+        })
+        .then(posts => {
+            posts.body.forEach(post => {
+                postsList.append(createPost(post))
+            })
+        })
 
-    for (let i = 0; i < posts.body.length; i++) {
-
-        const post = createPost(posts.body[i]);
-
-        postsList.append(post);
-    }
 }
 
 init();
