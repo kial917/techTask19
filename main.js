@@ -48,26 +48,6 @@ function createPost({
 
 }
 
-// function init() {
-//     postsList.innerHTML = '';
-//     fetch('http://inno-ijl.ru/multystub//stc-21-03/posts1', {
-//             cors: 'no-cors',
-//         })
-//         .then((response) => {
-//             if (response.ok) {
-//                 return response.json()
-//             }
-//             throw new Error('Статус ошибочен')
-//         })
-//         .then(posts => {
-//             posts.body.forEach(post => {
-//                 postsList.append(createPost(post))
-//             })
-//         })
-
-// }
-
-
 async function init() {
     try {
         postsList.innerHTML = '';
@@ -84,7 +64,7 @@ async function init() {
         }
         throw new Error('Ошибка запроса')
 
-    } catch (error){
+    } catch (error) {
         console.error(error);
     }
 }
