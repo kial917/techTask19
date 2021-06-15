@@ -48,23 +48,45 @@ function createPost({
 
 }
 
-function init() {
-    postsList.innerHTML = '';
-    fetch('http://inno-ijl.ru/multystub//stc-21-03/posts1', {
+// function init() {
+//     postsList.innerHTML = '';
+//     fetch('http://inno-ijl.ru/multystub//stc-21-03/posts1', {
+//             cors: 'no-cors',
+//         })
+//         .then((response) => {
+//             if (response.ok) {
+//                 return response.json()
+//             }
+//             throw new Error('Статус ошибочен')
+//         })
+//         .then(posts => {
+//             posts.body.forEach(post => {
+//                 postsList.append(createPost(post))
+//             })
+//         })
+
+// }
+
+
+async function init() {
+    try {
+        postsList.innerHTML = '';
+        const responce = await fetch('http://inno-ijl.ru/multystub//stc-21-03/posts1', {
             cors: 'no-cors',
-        })
-        .then((response) => {
-            if (response.ok) {
-                return response.json()
-            }
-            throw new Error('Статус ошибочен')
-        })
-        .then(posts => {
+        });
+        if (responce.ok) {
+            const posts = await responce.json();
+
             posts.body.forEach(post => {
                 postsList.append(createPost(post))
-            })
-        })
 
+            })
+        }
+        throw new Error('Ошибка запроса')
+
+    } catch (error){
+        console.error(error);
+    }
 }
 
 init();
