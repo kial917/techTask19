@@ -51,21 +51,17 @@ function createPost({
 async function init() {
     try {
         postsList.innerHTML = '';
-        const responce = await fetch('http://inno-ijl.ru/multystub//stc-21-03/posts1', {
+        const response = await fetch('http://inno-ijl.ru/multystub//stc-21-03/posts', {
             cors: 'no-cors',
         });
-        if (responce.ok) {
-            const posts = await responce.json();
+        if (!response.ok) throw new Error('Ошибка запроса');
 
-            posts.body.forEach(post => {
-                postsList.append(createPost(post))
-
-            })
-        }
-        throw new Error('Ошибка запроса')
-
-    } catch (error) {
-        console.error(error);
+        const posts = await response.json();
+        posts.body.forEach(post => {
+            postsList.append(createPost(post))
+        })
+    } catch (e) {
+        console.error(e)
     }
 }
 
