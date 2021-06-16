@@ -54,16 +54,15 @@ function init() {
             cors: 'no-cors',
         })
         .then((response) => {
-            if (response.ok) {
-                return response.json()
-            }
-            throw new Error('Статус ошибочен')
+            if (!response.ok) throw new Error('Статус ошибочен');
+            return response.json()
         })
         .then(posts => {
             posts.body.forEach(post => {
                 postsList.append(createPost(post))
             })
         })
+        .catch(e => console.error(e))
 
 }
 
